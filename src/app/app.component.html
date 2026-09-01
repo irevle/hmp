@@ -1,3 +1,64 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+
+  <ion-menu auto-hide="true" contentId="main-content">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>SIMOBILE</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="ion-padding">
+      <ion-list>
+        <ion-menu-toggle>
+          <ion-item routerLink="/tabs/dashboard">
+            <ion-icon name="home" slot="start"></ion-icon>
+            <ion-label>Dashboard</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-menu-toggle>
+          <ion-item routerLink="/tabs/produk">
+            <ion-icon name="cube-outline" slot="start"></ion-icon>
+            <ion-label>Produk</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-menu-toggle>
+          <ion-item routerLink="/tabs/keranjang">
+            <ion-icon name="cart-outline" slot="start"></ion-icon>
+            <ion-label>Keranjang Barang</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-menu-toggle>
+          <ion-item routerLink="/tabs/riwayat-transaksi">
+            <ion-icon name="reader-outline" slot="start"></ion-icon>
+            <ion-label>Riwayat Transaksi</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-menu-toggle>
+          <ion-item routerLink="/tabs/profil">
+            <ion-icon name="person-outline" slot="start"></ion-icon>
+            <ion-label>Profil</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-menu-toggle>
+          <ion-item routerLink="/tabs/pengaturan">
+            <ion-icon name="settings-outline" slot="start"></ion-icon>
+            <ion-label>Pengaturan</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-menu-toggle>
+          <ion-item routerLink="/tabs/tentang">
+            <ion-icon name="help-circle-outline" slot="start"></ion-icon>
+            <ion-label>Tentang</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet id="main-content"></ion-router-outlet>
 </ion-app>
