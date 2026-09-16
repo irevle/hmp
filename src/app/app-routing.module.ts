@@ -22,10 +22,7 @@ const routes: Routes = [
        import('./pages/tabs/tabs.module')
       .then(m => m.TabsPageModule)
   },
-  {
-    path: 'tabs',
-    loadChildren: () => import('./pages/tabs/tabs.module').then( m => m.TabsPageModule)
-  },
+  
   {
     path: 'detail-produk',
     loadChildren: () => import('./pages/detail-produk/detail-produk.module').then( m => m.DetailProdukPageModule)
@@ -38,10 +35,7 @@ const routes: Routes = [
     path: 'edit-produk',
     loadChildren: () => import('./pages/edit-produk/edit-produk.module').then( m => m.EditProdukPageModule)
   },
-  {
-    path: 'keranjang',
-    loadChildren: () => import('./pages/keranjang/keranjang.module').then( m => m.KeranjangPageModule)
-  },
+ 
   {
     path: 'riwayat-transaksi',
     loadChildren: () => import('./pages/riwayat-transaksi/riwayat-transaksi.module').then( m => m.RiwayatTransaksiPageModule)
