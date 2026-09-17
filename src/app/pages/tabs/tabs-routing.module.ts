@@ -7,118 +7,70 @@ const routes: Routes = [
   {
     path: '',
     component: TabsPage,
-      children: [
-
+    children: [
       {
         path: 'dashboard',
-
         loadChildren: () =>
           import('../dashboard/dashboard.module')
             .then(m => m.DashboardPageModule)
       },
-
       {
         path: 'produk',
-
         loadChildren: () =>
           import('../produk/produk.module')
             .then(m => m.ProdukPageModule)
       },
-
       {
         path: 'transaksi',
-
         loadChildren: () =>
           import('../transaksi/transaksi.module')
             .then(m => m.TransaksiPageModule)
       },
-
       {
         path: 'profil',
-
         loadChildren: () =>
           import('../profil/profil.module')
             .then(m => m.ProfilPageModule)
       },
-
+      {
+        path: 'keranjang',
+        loadChildren: () =>
+          import('../keranjang/keranjang.module')
+            .then(m => m.KeranjangPageModule)
+      },
+      {
+        path: 'riwayat-transaksi',
+        loadChildren: () =>
+          import('../riwayat-transaksi/riwayat-transaksi.module')
+            .then(m => m.RiwayatTransaksiPageModule)
+      },
+      {
+        // PERUBAHAN: ditambahkan parameter :id
+        path: 'detail-transaksi/:id',
+        loadChildren: () =>
+          import('../detail-transaksi/detail-transaksi.module')
+            .then(m => m.DetailTransaksiPageModule)
+      },
+      {
+        path: 'pengaturan',
+        loadChildren: () =>
+          import('../pengaturan/pengaturan.module')
+            .then(m => m.PengaturanPageModule)
+      },
+      {
+        path: 'tentang',
+        loadChildren: () =>
+          import('../tentang/tentang.module')
+            .then(m => m.TentangPageModule)
+      },
       {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full'
       }
-      ,
-        {
-    path: 'dashboard',
-    loadChildren: () =>
-      import('../dashboard/dashboard.module')
-        .then(m => m.DashboardPageModule)
-  },
-
-  // Route Produk
-  {
-    path: 'produk',
-    loadChildren: () =>
-      import('../produk/produk.module')
-        .then(m => m.ProdukPageModule)
-  },
-
-  // Route Transaksi
-  {
-    path: 'transaksi',
-    loadChildren: () =>
-      import('../transaksi/transaksi.module')
-        .then(m => m.TransaksiPageModule)
-  },
-
-  // Route Profil
-  {
-    path: 'profil',
-    loadChildren: () =>
-      import('../profil/profil.module')
-        .then(m => m.ProfilPageModule)
-  },
-
-  // Membuka halaman Keranjang melalui Tabs
-  {
-    path: 'keranjang',
-    loadChildren: () =>
-      import('../keranjang/keranjang.module')
-        .then(m => m.KeranjangPageModule)
-  },
-  {
-  path: 'riwayat-transaksi',
-  loadChildren: () =>
-    import('../riwayat-transaksi/riwayat-transaksi.module')
-      .then(m => m.RiwayatTransaksiPageModule)
-  } ,
-  {
-  path: 'detail-transaksi',
-  loadChildren: () =>
-    import('../detail-transaksi/detail-transaksi.module')
-      .then(m => m.DetailTransaksiPageModule)
-  },
-  {
-  path: 'pengaturan',
-  loadChildren: () =>
-    import('../pengaturan/pengaturan.module')
-      .then(m => m.PengaturanPageModule)
-  },
-  {
-  path: 'tentang',
-  loadChildren: () =>
-    import('../tentang/tentang.module')
-      .then(m => m.TentangPageModule)
-},
     ]
-
   }
-
 ];
-  
-  
-
-  
-
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
