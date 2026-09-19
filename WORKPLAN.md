@@ -40,23 +40,23 @@ Ketentuan soal: #5 (sebagian), #8, 10 dummy, struktur folder modular.
 
 Mengerjakan:
 
-- Halaman Produk (`produk.page`):
-  - Tampilkan list produk pakai `*ngFor`.
-  - Pencarian real-time: `[(ngModel)]` di `ion-searchbar`, filter otomatis saat ketik (tanpa tombol cari).
-  - Klik produk → navigasi ke detail (`detail-produk/:id`).
-  - Render tiap item pakai `<app-product-card>` (dari C).
-- Halaman Detail Produk (`detail-produk.page`):
-  - Ambil id dari route param (`ActivatedRoute.params`).
-  - Tampilkan nama, gambar, stok, harga beli, harga jual.
-  - Property binding gambar: kalau gambar kosong → tampilkan gambar default.
-  - Property binding tombol: `[disabled]="stok === 0"` di tombol "Tambah ke Keranjang".
-  - Event binding: klik tombol → `KeranjangService.tambah(...)`.
-- Halaman Tambah Produk (`tambah-produk.page`):
-  - Reactive Form: nama (wajib), kategori (wajib), harga beli (> 0), harga jual (> 0), stok (≥ 0), gambar (opsional).
-  - Pesan error inline per field yang salah. Submit gagal → jangan reset isian yang sudah benar.
-  - Submit sukses → simpan via `ProdukService` → kembali ke daftar produk.
-- Halaman Edit Produk (`edit-produk.page`):
-  - Sama seperti form tambah, tapi diisi data produk yang sudah ada (ambil by id dari route).
+- Halaman Produk (`produk.page`): ✅
+  - Tampilkan list produk pakai `*ngFor`. ✅
+  - Pencarian real-time: `[(ngModel)]` di `ion-searchbar`, filter otomatis saat ketik (tanpa tombol cari). ✅
+  - Klik produk → navigasi ke detail (`detail-produk/:id`). ✅
+  - Render tiap item pakai `<app-product-card>` (dari C). ✅
+- Halaman Detail Produk (`detail-produk.page`): ✅
+  - Ambil id dari route param (`ActivatedRoute.params`). ✅
+  - Tampilkan nama, gambar, stok, harga beli, harga jual. ✅
+  - Property binding gambar: kalau gambar kosong → tampilkan gambar default. ✅
+  - Property binding tombol: `[disabled]="stok === 0"` di tombol "Tambah ke Keranjang". ✅
+  - Event binding: klik tombol → `KeranjangService.tambah(...)`. ✅
+- Halaman Tambah Produk (`tambah-produk.page`): ✅
+  - Reactive Form: nama (wajib), kategori (wajib), harga beli (> 0), harga jual (> 0), stok (≥ 0), gambar (opsional). ✅
+  - Pesan error inline per field yang salah. Submit gagal → jangan reset isian yang sudah benar. ✅
+  - Submit sukses → simpan via `ProdukService` → kembali ke daftar produk. ✅
+- Halaman Edit Produk (`edit-produk.page`): ✅
+  - Sama seperti form tambah, tapi diisi data produk yang sudah ada (ambil by id dari route). ✅
 
 Ketentuan soal: #3, #4, #6.
 

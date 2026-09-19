@@ -1,13 +1,70 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>edit-produk</ion-title>
+    <ion-title>Edit Produk</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">edit-produk</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <form [formGroup]="produkForm" (ngSubmit)="onSubmit()">
+    <!-- Nama Produk -->
+    <ion-item>
+      <ion-label position="stacked">Nama Produk *</ion-label>
+      <ion-input formControlName="nama" placeholder="Masukkan nama produk"></ion-input>
+    </ion-item>
+    <ion-note color="danger" class="ion-padding-start"
+      *ngIf="(produkForm.get('nama')?.touched || isSubmitted) && produkForm.get('nama')?.hasError('required')">
+      Nama produk wajib diisi.
+    </ion-note>
+
+    <!-- Kategori -->
+    <ion-item>
+      <ion-label position="stacked">Kategori *</ion-label>
+      <ion-input formControlName="kategori" placeholder="Makanan, Minuman, dll"></ion-input>
+    </ion-item>
+    <ion-note color="danger" class="ion-padding-start"
+      *ngIf="(produkForm.get('kategori')?.touched || isSubmitted) && produkForm.get('kategori')?.hasError('required')">
+      Kategori wajib diisi.
+    </ion-note>
+
+    <!-- Harga Beli -->
+    <ion-item>
+      <ion-label position="stacked">Harga Beli *</ion-label>
+      <ion-input type="number" formControlName="hargaBeli" placeholder="0"></ion-input>
+    </ion-item>
+    <ion-note color="danger" class="ion-padding-start"
+      *ngIf="(produkForm.get('hargaBeli')?.touched || isSubmitted) && (produkForm.get('hargaBeli')?.hasError('required') || produkForm.get('hargaBeli')?.hasError('min'))">
+      Harga beli harus lebih besar dari 0.
+    </ion-note>
+
+    <!-- Harga Jual -->
+    <ion-item>
+      <ion-label position="stacked">Harga Jual *</ion-label>
+      <ion-input type="number" formControlName="hargaJual" placeholder="0"></ion-input>
+    </ion-item>
+    <ion-note color="danger" class="ion-padding-start"
+      *ngIf="(produkForm.get('hargaJual')?.touched || isSubmitted) && (produkForm.get('hargaJual')?.hasError('required') || produkForm.get('hargaJual')?.hasError('min'))">
+      Harga jual harus lebih besar dari 0.
+    </ion-note>
+
+    <!-- Stok -->
+    <ion-item>
+      <ion-label position="stacked">Stok *</ion-label>
+      <ion-input type="number" formControlName="stok" placeholder="0"></ion-input>
+    </ion-item>
+    <ion-note color="danger" class="ion-padding-start"
+      *ngIf="(produkForm.get('stok')?.touched || isSubmitted) && (produkForm.get('stok')?.hasError('required') || produkForm.get('stok')?.hasError('min'))">
+      Stok tidak boleh kurang dari 0.
+    </ion-note>
+
+    <!-- URL Gambar (Opsional) -->
+    <ion-item>
+      <ion-label position="stacked">URL Gambar (Opsional)</ion-label>
+      <ion-input formControlName="gambar" placeholder="https://..."></ion-input>
+    </ion-item>
+
+    <!-- Tombol Simpan Perubahan -->
+    <ion-button expand="block" type="submit" color="primary" class="ion-margin-top">
+      Simpan Perubahan
+    </ion-button>
+  </form>
 </ion-content>

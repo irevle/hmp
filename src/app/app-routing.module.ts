@@ -38,7 +38,8 @@ const routes: Routes = [
   },
 
   {
-    path: 'edit-produk',
+    // PERUBAHAN: ditambahkan :id untuk edit produk
+    path: 'edit-produk/:id',
     loadChildren: () =>
       import('./pages/edit-produk/edit-produk.module')
         .then(m => m.EditProdukPageModule)

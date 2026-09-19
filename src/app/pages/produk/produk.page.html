@@ -1,13 +1,43 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>produk</ion-title>
+    <ion-title>Produk</ion-title>
+    <!-- Tombol navigasi ke halaman Tambah Produk -->
+    <ion-buttons slot="end">
+      <ion-button routerLink="/tambah-produk">
+        <ion-icon slot="icon-only" name="add-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">produk</ion-title>
+      <ion-title size="large">Daftar Produk</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <!-- Searchbar Real-time (memanggil method onSearch) -->
+  <ion-searchbar placeholder="Cari produk..." (ionInput)="onSearch($event)" [debounce]="200">
+  </ion-searchbar>
+
+  <!-- List Produk -->
+  <ion-list>
+    <ion-item *ngFor="let produk of daftarProduk" [routerLink]="['/detail-produk', produk.id]" detail="true">
+
+      <ion-thumbnail slot="start">
+        <img [src]="produk.gambar ? produk.gambar : 'https://placehold.co/300x200?text=No+Image'" [alt]="produk.nama" />
+      </ion-thumbnail>
+
+      <ion-label>
+        <h2><strong>{{ produk.nama }}</strong></h2>
+        <p>Kategori: {{ produk.kategori }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- Pesan jika hasil pencarian kosong -->
+  <div *ngIf="daftarProduk.length === 0" class="ion-text-center ion-padding">
+    <p>Produk tidak ditemukan.</p>
+  </div>
 </ion-content>
