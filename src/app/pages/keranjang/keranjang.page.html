@@ -1,13 +1,56 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>keranjang</ion-title>
+    <ion-buttons>
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Keranjang</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">keranjang</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <!-- jika kosong -->
+  <div class="kosong" *ngIf="items.length === 0">
+    <ion-icon name="cart-outline"></ion-icon>
+    <h2>Keranjang masih kosong</h2>
+    <p>Yuk pilih barang di halaman Produk.</p>
+    <ion-button routerLink="/tabs/produk" routerDirection="back">Lihat Produk</ion-button>
+  </div>
+
+  <!-- jika ada isi -->
+  <ng-container *ngIf="items.length > 0">
+    <ion-list lines="full">
+      <ion-item *ngFor="let item of items">
+        <ion-thumbnail slot="start">
+          <img [src]="item.produk.gambar || 'assets/img/default.png'" alt="">
+        </ion-thumbnail>
+
+        <ion-label>
+          <h2>{{ item.produk.nama }}</h2>
+          <p>{{ item.produk.hargaJual | currency:'IDR':'symbol':'1.0-0' }}</p>
+        </ion-label>
+
+        <div slot="end" class="qty">
+          <ion-button fill="clear" size="small" (click)="kurangQty(item.produk.id)">-</ion-button>
+          <span class="jumlah">{{ item.jumlah }}</span>
+          <ion-button fill="clear" size="small" (click)="tambahQty(item.produk.id)">+</ion-button>
+          <ion-button fill="clear" color="danger" size="small" (click)="hapus(item.produk.id)">
+            <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-item>
+    </ion-list>
+
+    <!-- total -->
+    <div class="total-baris">
+      <span>Total Belanja</span>
+      <strong>{{ total | currency:'IDR':'symbol':'1.0-0' }}</strong>
+    </div>
+
+    <!-- tombol -->
+    <div class="tombol-area">
+      <ion-button expand="block" size="large" [disabled]="items.length === 0" (click)="konfirmasi()">
+        Konfirmasi Transaksi
+      </ion-button>
+    </div>
+  </ng-container>
 </ion-content>
