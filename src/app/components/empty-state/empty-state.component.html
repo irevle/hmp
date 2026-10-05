@@ -1,0 +1,7 @@
+<div class="empty-state ion-text-center ion-padding">
+  <ion-icon [name]="icon"></ion-icon>
+  <p>{{ pesan }}</p>
+  <ion-button *ngIf="aksiLabel" fill="outline" size="small" (click)="onAksi()">
+    {{ aksiLabel }}
+  </ion-button>
+</div>
