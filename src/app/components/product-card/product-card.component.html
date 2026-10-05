@@ -1,0 +1,15 @@
+<p>
+  <ion-card (click)="onCardClick()" class="product-card">
+  <img [src]="gambar" [alt]="produk.nama" />
+  <ion-card-header>
+    <ion-card-subtitle>{{ produk.kategori }}</ion-card-subtitle>
+    <ion-card-title>{{ produk.nama }}</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <p><strong>Rp{{ produk.hargaJual | number }}</strong></p>
+    <ion-badge [color]="produk.stok === 0 ? 'danger' : 'success'">
+      {{ produk.stok === 0 ? 'Stok Habis' : produk.stok + ' unit' }}
+    </ion-badge>
+  </ion-card-content>
+</ion-card>
+</p>
