@@ -18,7 +18,11 @@
   </ion-header>
 
   <!-- Searchbar Real-time (memanggil method onSearch) -->
-  <ion-searchbar placeholder="Cari produk..." (ionInput)="onSearch($event)" [debounce]="200">
+  <ion-searchbar 
+    placeholder="Cari produk..." 
+    [(ngModel)]="keyword" 
+    (ionInput)="onSearch($event)" 
+    [debounce]="200">
   </ion-searchbar>
 
   <!-- List Produk -->
@@ -26,7 +30,7 @@
     <ion-item *ngFor="let produk of daftarProduk" [routerLink]="['/detail-produk', produk.id]" detail="true">
 
       <ion-thumbnail slot="start">
-        <img [src]="produk.gambar ? produk.gambar : 'https://placehold.co/300x200?text=No+Image'" [alt]="produk.nama" />
+        <img [src]="produk.gambar || 'assets/img/no-image.png'" [alt]="produk.nama" />
       </ion-thumbnail>
 
       <ion-label>
