@@ -9,6 +9,7 @@
 
     <ion-content class="ion-padding">
       <ion-list>
+
         <ion-menu-toggle>
           <ion-item routerLink="/tabs/dashboard">
             <ion-icon name="home" slot="start"></ion-icon>
@@ -57,8 +58,18 @@
             <ion-label>Tentang</ion-label>
           </ion-item>
         </ion-menu-toggle>
+
+        <ion-menu-toggle>
+          <ion-item button (click)="logout()">
+            <ion-icon name="log-out-outline" slot="start"></ion-icon>
+            <ion-label>Logout</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
       </ion-list>
     </ion-content>
   </ion-menu>
+
   <ion-router-outlet id="main-content"></ion-router-outlet>
+
 </ion-app>
