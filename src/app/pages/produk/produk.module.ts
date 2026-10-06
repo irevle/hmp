@@ -6,6 +6,7 @@ import { IonicModule } from '@ionic/angular/lazy';
 
 import { ProdukPageRoutingModule } from './produk-routing.module';
 
+import { ComponentsModule } from '../../components/components.module';
 import { ProdukPage } from './produk.page';
 
 @NgModule({
@@ -13,8 +14,9 @@ import { ProdukPage } from './produk.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    ProdukPageRoutingModule
+    ProdukPageRoutingModule,
+    ComponentsModule,
   ],
-  declarations: [ProdukPage]
+  declarations: [ProdukPage],
 })
 export class ProdukPageModule {}

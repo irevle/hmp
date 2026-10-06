@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular/lazy';
 
 import { PengaturanPageRoutingModule } from './pengaturan-routing.module';
+import { ComponentsModule } from '../../components/components.module';
 
 import { PengaturanPage } from './pengaturan.page';
 
@@ -13,8 +14,9 @@ import { PengaturanPage } from './pengaturan.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    PengaturanPageRoutingModule
+    PengaturanPageRoutingModule,
+    ComponentsModule,
   ],
-  declarations: [PengaturanPage]
+  declarations: [PengaturanPage],
 })
 export class PengaturanPageModule {}

@@ -3,7 +3,7 @@ import { KeranjangService } from '../../services/keranjang.service';
 import { TransaksiService } from '../../services/transaksi.service';
 import { Router } from '@angular/router';
 import { KeranjangItem } from '../../models/keranjang-item.model';
-
+import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'app-keranjang',
   templateUrl: './keranjang.page.html',
@@ -18,15 +18,20 @@ export class KeranjangPage implements OnInit {
     private keranjang: KeranjangService,
     private transaksi: TransaksiService,
     private router: Router,
+    private cdr: ChangeDetectorRef,
   ) {}
-
   ngOnInit() {
+    this.refresh();
+  }
+
+  ionViewWillEnter() {
     this.refresh();
   }
 
   refresh() {
     this.items = this.keranjang.getItems();
     this.total = this.keranjang.getTotal();
+    this.cdr.detectChanges();
   }
 
   tambahQty(id: number) {

@@ -20,9 +20,8 @@ export class DashboardPage implements OnInit {
     private produkService: ProdukService,
     private transaksiService: TransaksiService,
     private router: Router,
-    private animationCtrl: AnimationController
-
-  ) { }
+    private animationCtrl: AnimationController,
+  ) {}
 
   ngOnInit() {
     this.muatRingkasan();
@@ -44,41 +43,41 @@ export class DashboardPage implements OnInit {
   }
 
   ionViewDidEnter() {
-  this.animasiMasuk();
-}
-
-animasiMasuk(): void {
-  const kartu = document.querySelectorAll('.ringkasan-card');
-  if (!kartu.length) {
-    return;
+    this.animasiMasuk();
   }
-  const animasi = this.animationCtrl
-    .create()
-    .addElement(kartu)
-    .duration(600)
-    .easing('ease-out')
-    .keyframes([
-      { offset: 0, opacity: '0', transform: 'translateY(24px)' },
-      { offset: 1, opacity: '1', transform: 'translateY(0)' },
-    ]);
-  animasi.play();
-}
 
-animasiTerlaris(): void {
-  const el = document.querySelector('.terlaris-wrap');
-  if (!el) {
-    return;
+  animasiMasuk(): void {
+    const kartu = document.querySelectorAll('.ringkasan-card');
+    if (!kartu.length) {
+      return;
+    }
+    const animasi = this.animationCtrl
+      .create()
+      .addElement(kartu)
+      .duration(600)
+      .easing('ease-out')
+      .keyframes([
+        { offset: 0, opacity: '0', transform: 'translateY(24px)' },
+        { offset: 1, opacity: '1', transform: 'translateY(0)' },
+      ]);
+    animasi.play();
   }
-  const animasi = this.animationCtrl
-    .create()
-    .addElement(el)
-    .duration(500)
-    .easing('ease-in-out')
-    .keyframes([
-      { offset: 0, opacity: '0', transform: 'scale(0.92)' },
-      { offset: 0.6, opacity: '1', transform: 'scale(1.03)' },
-      { offset: 1, opacity: '1', transform: 'scale(1)' },
-    ]);
-  animasi.play();
-}
+
+  animasiTerlaris(): void {
+    const el = document.querySelector('.terlaris-wrap');
+    if (!el) {
+      return;
+    }
+    const animasi = this.animationCtrl
+      .create()
+      .addElement(el)
+      .duration(500)
+      .easing('ease-in-out')
+      .keyframes([
+        { offset: 0, opacity: '0', transform: 'scale(0.92)' },
+        { offset: 0.6, opacity: '1', transform: 'scale(1.03)' },
+        { offset: 1, opacity: '1', transform: 'scale(1)' },
+      ]);
+    animasi.play();
+  }
 }

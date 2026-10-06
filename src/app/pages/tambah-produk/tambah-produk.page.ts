@@ -17,8 +17,8 @@ export class TambahProdukPage implements OnInit {
   constructor(
     private fb: FormBuilder,
     private produkService: ProdukService,
-    private router: Router
-  ) { }
+    private router: Router,
+  ) {}
 
   ngOnInit() {
     this.produkForm = this.fb.group({
@@ -27,7 +27,7 @@ export class TambahProdukPage implements OnInit {
       hargaBeli: [null, [Validators.required, Validators.min(1)]],
       hargaJual: [null, [Validators.required, Validators.min(1)]],
       stok: [null, [Validators.required, Validators.min(0)]],
-      gambar: ['']
+      gambar: [''],
     });
   }
   onSubmit() {
@@ -43,9 +43,10 @@ export class TambahProdukPage implements OnInit {
     const produkBaru: Produk = {
       ...this.produkForm.value,
       id: totalProduk + 1,
-      gambar: formValues.gambar && formValues.gambar.trim() !== ''
-        ? formValues.gambar
-        : 'https://placehold.co/300x200?text=No+Image'
+      gambar:
+        formValues.gambar && formValues.gambar.trim() !== ''
+          ? formValues.gambar
+          : 'assets/img/no-image.png',
     };
 
     // Panggil method tambah() yang ada di ProdukService

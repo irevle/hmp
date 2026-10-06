@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular/lazy';
 
 @Component({
   selector: 'app-root',
@@ -21,13 +21,13 @@ export class AppComponent implements OnInit {
       buttons: [
         {
           text: 'Batal',
-          role: 'cancel'
+          role: 'cancel',
         },
         {
           text: 'Keluar',
-          handler: () => {}
-        }
-      ]
+          handler: () => {},
+        },
+      ],
     });
 
     await alert.present();

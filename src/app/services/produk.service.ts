@@ -5,10 +5,7 @@ import { Produk } from '../models/produk.model';
   providedIn: 'root',
 })
 export class ProdukService {
-
   private produkList: Produk[] = [
-
-
     {
       id: 1,
       nama: 'Beras Premium',
@@ -17,8 +14,7 @@ export class ProdukService {
       hargaBeli: 55000,
       hargaJual: 65000,
 
-
-      gambar: 'assets/img/no-image.png'
+      gambar: 'assets/img/no-image.png',
     },
 
     {
@@ -29,8 +25,7 @@ export class ProdukService {
       hargaBeli: 16000,
       hargaJual: 19000,
 
-     
-      gambar: 'assets/img/no-image.png'
+      gambar: 'assets/img/minyak-sawit.jpg',
     },
 
     {
@@ -41,8 +36,7 @@ export class ProdukService {
       hargaBeli: 14000,
       hargaJual: 17000,
 
-    
-      gambar: 'assets/img/no-image.png'
+      gambar: 'assets/img/gula-pasir.jpg',
     },
 
     {
@@ -53,8 +47,7 @@ export class ProdukService {
       hargaBeli: 2000,
       hargaJual: 3000,
 
-  
-      gambar: 'assets/img/no-image.png'
+      gambar: 'assets/img/kopi.jpg',
     },
 
     {
@@ -65,8 +58,7 @@ export class ProdukService {
       hargaBeli: 7000,
       hargaJual: 9500,
 
-     
-      gambar: 'assets/img/no-image.png'
+      gambar: 'assets/img/no-image.png',
     },
 
     {
@@ -77,8 +69,7 @@ export class ProdukService {
       hargaBeli: 6000,
       hargaJual: 8000,
 
-    
-      gambar: 'assets/img/no-image.png'
+      gambar: 'assets/img/no-image.png',
     },
 
     {
@@ -89,8 +80,7 @@ export class ProdukService {
       hargaBeli: 2500,
       hargaJual: 3500,
 
-    
-      gambar: 'assets/img/no-image.png'
+      gambar: 'assets/img/mie-instan.jpg',
     },
 
     {
@@ -101,8 +91,7 @@ export class ProdukService {
       hargaBeli: 3000,
       hargaJual: 5000,
 
-    
-      gambar: 'assets/img/no-image.png'
+      gambar: 'assets/img/no-image.png',
     },
 
     {
@@ -113,8 +102,7 @@ export class ProdukService {
       hargaBeli: 4000,
       hargaJual: 6000,
 
-   
-      gambar: 'assets/img/no-image.png'
+      gambar: 'assets/img/no-image.png',
     },
 
     {
@@ -123,58 +111,37 @@ export class ProdukService {
       kategori: 'Kebutuhan Rumah',
       stok: 8,
       hargaBeli: 8000,
-      hargaJual: 11000
-
-    
-    }
-
+      hargaJual: 11000,
+    },
   ];
 
- 
   getAll(): Produk[] {
-
     return this.produkList;
   }
 
-  
   getById(id: number): Produk | undefined {
-
-    
-    return this.produkList.find(
-      produk => produk.id === id
-    );
+    return this.produkList.find((produk) => produk.id === id);
   }
 
   cariNama(keyword: string): Produk[] {
-
-  
     const kata = keyword.toLowerCase().trim();
 
-    return this.produkList.filter(
-      produk => produk.nama.toLowerCase().includes(kata)
+    return this.produkList.filter((produk) =>
+      produk.nama.toLowerCase().includes(kata),
     );
   }
 
-  
   tambah(produk: Produk): void {
-
-    
     this.produkList.push(produk);
   }
 
   update(id: number, dataBaru: Produk): boolean {
+    const index = this.produkList.findIndex((produk) => produk.id === id);
 
-    
-    const index = this.produkList.findIndex(
-      produk => produk.id === id
-    );
-
-    
     if (index === -1) {
       return false;
     }
 
-    
     this.produkList[index] = dataBaru;
 
     return true;

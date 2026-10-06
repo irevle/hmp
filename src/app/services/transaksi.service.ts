@@ -2,42 +2,76 @@ import { Injectable } from '@angular/core';
 import { Transaksi } from '../models/transaksi.model';
 import { KeranjangItem } from '../models/keranjang-item.model';
 import { Produk } from '../models/produk.model';
+import { ProdukService } from './produk.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TransaksiService {
-
   private transaksiList: Transaksi[] = [];
 
-  constructor() { }
+  constructor(private produkService: ProdukService) {
+    this.transaksiList = this.buatDummyTransaksi();
+  }
 
+  buatDummyTransaksi(): Transaksi[] {
+    const hariIni = new Date();
+
+    const beras = this.produkService.getById(1);
+    const minyak = this.produkService.getById(2);
+    const kopi = this.produkService.getById(4);
+
+    if (!beras || !minyak || !kopi) {
+      return [];
+    }
+    const transaksi1: Transaksi = {
+      id: 1,
+      tanggal: hariIni,
+      items: [
+        { produk: beras, jumlah: 2 },
+        { produk: minyak, jumlah: 1 },
+      ],
+      total: 0,
+    };
+    transaksi1.total = this.hitungTotal(transaksi1.items);
+
+    const transaksi2: Transaksi = {
+      id: 2,
+      tanggal: hariIni,
+      items: [{ produk: kopi, jumlah: 3 }],
+      total: 0,
+    };
+    transaksi2.total = this.hitungTotal(transaksi2.items);
+
+    return [transaksi1, transaksi2];
+  }
+
+  private hitungTotal(items: KeranjangItem[]): number {
+    return items.reduce(
+      (total, item) => total + item.produk.hargaJual * item.jumlah,
+      0,
+    );
+  }
   getAll(): Transaksi[] {
     return this.transaksiList;
   }
 
   getById(id: number): Transaksi | undefined {
-    return this.transaksiList.find(
-      transaksi => transaksi.id === id
-    );
+    return this.transaksiList.find((transaksi) => transaksi.id === id);
   }
 
   simpan(items: KeranjangItem[], total: number): void {
-
     const transaksiBaru: Transaksi = {
-
-
       id: this.transaksiList.length + 1,
 
-   
-      items: items.map(item => ({
+      items: items.map((item) => ({
         produk: item.produk,
-        jumlah: item.jumlah
+        jumlah: item.jumlah,
       })),
 
       total: total,
 
-      tanggal: new Date()
+      tanggal: new Date(),
     };
 
     this.transaksiList.push(transaksiBaru);
@@ -46,38 +80,32 @@ export class TransaksiService {
   getTotalHariIni(): number {
     const hariIni = new Date();
 
-    const transaksiHariIni = this.transaksiList.filter(
-      transaksi => {
-        const tanggalTransaksi = new Date(transaksi.tanggal);
+    const transaksiHariIni = this.transaksiList.filter((transaksi) => {
+      const tanggalTransaksi = new Date(transaksi.tanggal);
 
-        return (
-          tanggalTransaksi.getFullYear() === hariIni.getFullYear() &&
-          tanggalTransaksi.getMonth() === hariIni.getMonth() &&
-          tanggalTransaksi.getDate() === hariIni.getDate()
-        );
-      }
-    );
+      return (
+        tanggalTransaksi.getFullYear() === hariIni.getFullYear() &&
+        tanggalTransaksi.getMonth() === hariIni.getMonth() &&
+        tanggalTransaksi.getDate() === hariIni.getDate()
+      );
+    });
 
     return transaksiHariIni.reduce(
       (total, transaksi) => total + transaksi.total,
-      0
+      0,
     );
   }
 
- 
   getProdukTerlaris(): Produk | null {
-
     const jumlahTerjual: {
       produk: Produk;
       jumlah: number;
     }[] = [];
 
-    this.transaksiList.forEach(transaksi => {
-
-      transaksi.items.forEach(item => {
-
+    this.transaksiList.forEach((transaksi) => {
+      transaksi.items.forEach((item) => {
         const dataProduk = jumlahTerjual.find(
-          data => data.produk.id === item.produk.id
+          (data) => data.produk.id === item.produk.id,
         );
 
         if (dataProduk) {
@@ -85,14 +113,11 @@ export class TransaksiService {
         } else {
           jumlahTerjual.push({
             produk: item.produk,
-            jumlah: item.jumlah
+            jumlah: item.jumlah,
           });
         }
-
       });
-
     });
-
 
     if (jumlahTerjual.length === 0) {
       return null;
@@ -100,15 +125,12 @@ export class TransaksiService {
 
     let terlaris = jumlahTerjual[0];
 
-    jumlahTerjual.forEach(data => {
-
+    jumlahTerjual.forEach((data) => {
       if (data.jumlah > terlaris.jumlah) {
         terlaris = data;
       }
-
     });
 
     return terlaris.produk;
   }
-
 }
