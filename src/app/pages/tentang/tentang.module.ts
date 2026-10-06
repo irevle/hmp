@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular/lazy';
 import { TentangPageRoutingModule } from './tentang-routing.module';
 
 import { TentangPage } from './tentang.page';
+import { ComponentsModule } from '../../components/components.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    TentangPageRoutingModule
+    TentangPageRoutingModule,
+    ComponentsModule
   ],
   declarations: [TentangPage]
 })

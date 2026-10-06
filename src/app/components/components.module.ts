@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular/lazy';
 import { ProductCardComponent } from './product-card/product-card.component';
+import { EmptyStateComponent } from './empty-state/empty-state.component';
+import { CustomHeaderComponent } from './custom-header/custom-header.component';
 
 @NgModule({
-  declarations: [ProductCardComponent],
+  declarations: [ProductCardComponent, EmptyStateComponent, CustomHeaderComponent],
   imports: [CommonModule, IonicModule],
-  exports: [ProductCardComponent],
+  exports: [ProductCardComponent, EmptyStateComponent, CustomHeaderComponent],
 })
 export class ComponentsModule {}
