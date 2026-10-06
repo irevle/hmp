@@ -1,0 +1,30 @@
+.info-card {
+  margin-top: 16px;
+
+  .info-baris {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+
+    span {
+      color: var(--ion-color-medium);
+    }
+  }
+}
+
+.judul {
+  margin: 16px 0 8px;
+}
+
+.total-baris {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+  margin: 12px 16px 0;
+  border-top: 2px dashed var(--ion-color-medium);
+  font-size: 1.1rem;
+
+  strong {
+    color: var(--ion-color-primary);
+  }
+}

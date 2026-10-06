@@ -7,10 +7,21 @@ import { Component, OnInit } from '@angular/core';
   standalone: false,
 })
 export class ProfilPage implements OnInit {
+  toko = {
+    nama: 'Toko Makmur Jaya',
+    pemilik: 'Bu Marni',
+    kategori: 'Kelontong / Sembako',
+    alamat: 'Depok, Jawa Barat',
+    telepon: '0812-3456-7890',
+  };
 
-  constructor() { }
+  aplikasi = {
+    nama: 'SIMOBILE',
+    versi: '1.0.0',
+    keterangan:
+      'Aplikasi kasir mobile untuk mencatat penjualan langsung dari HP, tanpa koneksi internet.',
+  };
+  constructor() {}
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

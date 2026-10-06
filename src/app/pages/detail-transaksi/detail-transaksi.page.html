@@ -1,13 +1,53 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>detail-transaksi</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-custom-header title="Detail Transaksi" [showMenuButton]="false" [showBackButton]="true"
+  [defaultBackHref]="'/tabs/riwayat-transaksi'">
+</app-custom-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">detail-transaksi</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ng-container *ngIf="transaksi as t; else tidakDitemukan">
+
+    <!-- ringkasan -->
+    <ion-card class="info-card">
+      <ion-card-content>
+        <div class="info-baris">
+          <span>No. Transaksi</span>
+          <strong>#{{ t.id }}</strong>
+        </div>
+        <div class="info-baris">
+          <span>Waktu</span>
+          <strong>{{ t.tanggal | date:'d MMM yyyy, HH:mm' }}</strong>
+        </div>
+        <div class="info-baris">
+          <span>Jumlah Barang</span>
+          <strong>{{ jumlahItem() }}</strong>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- item yang dibeli -->
+    <h2 class="judul">Item Dibeli</h2>
+    <ion-list lines="full">
+      <ion-item *ngFor="let item of t.items">
+        <ion-label>
+          <h2>{{ item.produk.nama }}</h2>
+          <p>{{ item.jumlah }} x Rp{{ item.produk.hargaJual | number }}</p>
+        </ion-label>
+        <ion-badge slot="end" color="medium">
+          Rp{{ item.produk.hargaJual * item.jumlah | number }}
+        </ion-badge>
+      </ion-item>
+    </ion-list>
+
+    <!-- total -->
+    <div class="total-baris">
+      <span>Total Belanja</span>
+      <strong>Rp{{ t.total | number }}</strong>
+    </div>
+
+  </ng-container>
+
+  <!-- kalau id salah / tidak ada -->
+  <ng-template #tidakDitemukan>
+    <app-empty-state icon="alert-circle-outline" pesan="Transaksi tidak ditemukan">
+    </app-empty-state>
+  </ng-template>
 </ion-content>

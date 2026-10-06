@@ -11,65 +11,61 @@ const routes: Routes = [
       {
         path: 'dashboard',
         loadChildren: () =>
-          import('../dashboard/dashboard.module')
-            .then(m => m.DashboardPageModule)
+          import('../dashboard/dashboard.module').then(
+            (m) => m.DashboardPageModule,
+          ),
       },
       {
         path: 'produk',
         loadChildren: () =>
-          import('../produk/produk.module')
-            .then(m => m.ProdukPageModule)
-      },
-      {
-        path: 'transaksi',
-        loadChildren: () =>
-          import('../transaksi/transaksi.module')
-            .then(m => m.TransaksiPageModule)
+          import('../produk/produk.module').then((m) => m.ProdukPageModule),
       },
       {
         path: 'profil',
         loadChildren: () =>
-          import('../profil/profil.module')
-            .then(m => m.ProfilPageModule)
+          import('../profil/profil.module').then((m) => m.ProfilPageModule),
       },
       {
         path: 'keranjang',
         loadChildren: () =>
-          import('../keranjang/keranjang.module')
-            .then(m => m.KeranjangPageModule)
+          import('../keranjang/keranjang.module').then(
+            (m) => m.KeranjangPageModule,
+          ),
       },
       {
         path: 'riwayat-transaksi',
         loadChildren: () =>
-          import('../riwayat-transaksi/riwayat-transaksi.module')
-            .then(m => m.RiwayatTransaksiPageModule)
+          import('../riwayat-transaksi/riwayat-transaksi.module').then(
+            (m) => m.RiwayatTransaksiPageModule,
+          ),
       },
       {
         // PERUBAHAN: ditambahkan parameter :id
         path: 'detail-transaksi/:id',
         loadChildren: () =>
-          import('../detail-transaksi/detail-transaksi.module')
-            .then(m => m.DetailTransaksiPageModule)
+          import('../detail-transaksi/detail-transaksi.module').then(
+            (m) => m.DetailTransaksiPageModule,
+          ),
       },
       {
         path: 'pengaturan',
         loadChildren: () =>
-          import('../pengaturan/pengaturan.module')
-            .then(m => m.PengaturanPageModule)
+          import('../pengaturan/pengaturan.module').then(
+            (m) => m.PengaturanPageModule,
+          ),
       },
       {
         path: 'tentang',
         loadChildren: () =>
-          import('../tentang/tentang.module')
-            .then(m => m.TentangPageModule)
+          import('../tentang/tentang.module').then((m) => m.TentangPageModule),
       },
       {
         path: '',
         redirectTo: 'dashboard',
-        pathMatch: 'full'
-      }
-    ]
-  }
+        pathMatch: 'full',
+      },
+    ],
+  },
 ];
 
 @NgModule({

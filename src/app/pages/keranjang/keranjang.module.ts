@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular/lazy';
 
 import { KeranjangPageRoutingModule } from './keranjang-routing.module';
+import { ComponentsModule } from '../../components/components.module';
 
 import { KeranjangPage } from './keranjang.page';
 
@@ -13,8 +14,9 @@ import { KeranjangPage } from './keranjang.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    KeranjangPageRoutingModule
+    KeranjangPageRoutingModule,
+    ComponentsModule,
   ],
-  declarations: [KeranjangPage]
+  declarations: [KeranjangPage],
 })
 export class KeranjangPageModule {}

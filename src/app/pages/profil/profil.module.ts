@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular/lazy';
 
 import { ProfilPageRoutingModule } from './profil-routing.module';
+import { ComponentsModule } from '../../components/components.module';
 
 import { ProfilPage } from './profil.page';
 
@@ -13,8 +14,9 @@ import { ProfilPage } from './profil.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    ProfilPageRoutingModule
+    ProfilPageRoutingModule,
+    ComponentsModule,
   ],
-  declarations: [ProfilPage]
+  declarations: [ProfilPage],
 })
 export class ProfilPageModule {}

@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular/lazy';
 
 import { RiwayatTransaksiPageRoutingModule } from './riwayat-transaksi-routing.module';
+import { ComponentsModule } from '../../components/components.module';
 
 import { RiwayatTransaksiPage } from './riwayat-transaksi.page';
 
@@ -13,8 +14,9 @@ import { RiwayatTransaksiPage } from './riwayat-transaksi.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    RiwayatTransaksiPageRoutingModule
+    RiwayatTransaksiPageRoutingModule,
+    ComponentsModule,
   ],
-  declarations: [RiwayatTransaksiPage]
+  declarations: [RiwayatTransaksiPage],
 })
 export class RiwayatTransaksiPageModule {}

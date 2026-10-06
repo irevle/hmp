@@ -1,11 +1,4 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-buttons>
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>Keranjang</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-custom-header title="Keranjang"></app-custom-header>
 
 <ion-content [fullscreen]="true">
   <!-- jika kosong -->
@@ -21,7 +14,7 @@
     <ion-list lines="full">
       <ion-item *ngFor="let item of items">
         <ion-thumbnail slot="start">
-          <img [src]="item.produk.gambar || 'assets/img/default.png'" alt="">
+          <img [src]="item.produk.gambar || 'assets/img/no-image.png'" alt="">
         </ion-thumbnail>
 
         <ion-label>
