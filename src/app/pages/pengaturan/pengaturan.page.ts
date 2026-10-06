@@ -23,6 +23,6 @@ export class PengaturanPage implements OnInit {
   }
 
   private terapkanMode(): void {
-    document.body.classList.toggle('dark', this.darkMode);
+    document.documentElement.classList.toggle('ion-palette-dark', this.darkMode);
   }
 }
