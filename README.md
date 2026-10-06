@@ -1,4 +1,4 @@
-# SIMOBILE
+# HMP Project (SIMOBILE App)
 
 Aplikasi kasir (point of sale) berbasis **Ionic + Angular** yang berjalan **sepenuhnya offline**. Dirancang untuk memenuhi kebutuhan kasir kecil: mencatat produk, membangun keranjang belanja, menyimpan riwayat transaksi, dan menampilkan ringkasan penjualan — tanpa memerlukan koneksi internet.
 
