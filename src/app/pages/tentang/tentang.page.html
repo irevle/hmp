@@ -1,13 +1,47 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>tentang</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-custom-header title="Tentang"></app-custom-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">tentang</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>SIMOBILE v1.0</ion-card-title>
+      <ion-card-subtitle>Prototipe kasir mobile Toko Makmur Jaya</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Dibuat untuk UTS Gasal 2026/27 — pencatatan transaksi offline untuk warung Bu Marni.</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Tim Pengembang</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list lines="none">
+        <ion-item>
+          <ion-label>
+            <h3>Anggota A — Fondasi + Data</h3>
+            <p>Models, services, routing</p>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <h3>Anggota B — Produk</h3>
+            <p>Pencarian, detail, tambah/edit produk</p>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <h3>Anggota C — Dashboard + Tema</h3>
+            <p>Komponen, dashboard, dark mode, animasi</p>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <h3>Anggota D — Transaksi</h3>
+            <p>Keranjang, riwayat, profil</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
