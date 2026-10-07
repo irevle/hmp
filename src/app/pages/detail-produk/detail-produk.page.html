@@ -23,10 +23,7 @@
   <ion-card *ngIf="produk">
 
     <!-- PERUBAHAN: fallback menggunakan gambar lokal -->
-    <img
-      [src]="produk.gambar ? produk.gambar : 'assets/img/no-image.png'"
-      [alt]="produk.nama"
-    />
+    <img [src]="produk.gambar ? produk.gambar : 'assets/img/no-image.png'" [alt]="produk.nama" />
 
     <ion-card-header>
       <ion-card-subtitle>
@@ -70,37 +67,17 @@
       </ion-list>
 
       <!-- Tombol yang memicu fungsi -->
-      <ion-button
-        expand="block"
-        class="ion-margin-top"
-        [disabled]="produk.stok === 0"
-        (click)="tambahKeKeranjang()"
-      >
-        <ion-icon
-          slot="start"
-          name="cart-outline">
+      <ion-button expand="block" class="ion-margin-top" [disabled]="produk.stok === 0" (click)="tambahKeKeranjang()">
+        <ion-icon slot="start" name="cart-outline">
         </ion-icon>
 
         {{ produk.stok === 0 ? 'Stok Habis' : 'Tambah ke Keranjang' }}
       </ion-button>
-
-      <!-- Komponen ion-alert langsung ditulis di HTML -->
-      <ion-alert
-        [isOpen]="isAlertOpen"
-        header="Berhasil"
-        [message]="produk.nama + ' berhasil ditambahkan ke keranjang!'"
-        [buttons]="alertButtons"
-        (didDismiss)="isAlertOpen = false">
-      </ion-alert>
-
     </ion-card-content>
   </ion-card>
 
   <!-- Tampilan jika produk tidak ditemukan/ID salah -->
-  <div
-    *ngIf="!produk"
-    class="ion-text-center ion-padding"
-  >
+  <div *ngIf="!produk" class="ion-text-center ion-padding">
     <p>Produk tidak ditemukan.</p>
   </div>
 

@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ProdukService } from '../../services/produk.service';
 import { KeranjangService } from '../../services/keranjang.service';
 import { Produk } from '../../models/produk.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-detail-produk',
@@ -13,13 +14,12 @@ import { Produk } from '../../models/produk.model';
 export class DetailProdukPage implements OnInit {
   // Variabel untuk menampung 1 detail produk
   produk: Produk | undefined;
-  public alertButtons = ['OK'];
-  isAlertOpen = false;
 
   constructor(// Inject ActivatedRoute & ProdukService
     private route: ActivatedRoute,
     private produkService: ProdukService,
     private keranjangService: KeranjangService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -31,7 +31,7 @@ export class DetailProdukPage implements OnInit {
   tambahKeKeranjang() {
     if (this.produk) {
       this.keranjangService.tambah(this.produk, 1);
-      this.isAlertOpen = true;
+      this.router.navigate(['/tabs/keranjang']);
     }
   }
 }

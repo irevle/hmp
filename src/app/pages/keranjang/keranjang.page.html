@@ -1,6 +1,14 @@
-<app-custom-header title="Keranjang"></app-custom-header>
+<app-custom-header title="Keranjang">
+  <ion-buttons slot="end">
+    <ion-button fill="outline" color="primary" (click)="refresh()">
+      <ion-icon slot="start" name="refresh-outline"></ion-icon>
+      Refresh
+    </ion-button>
+  </ion-buttons>
+</app-custom-header>
 
 <ion-content [fullscreen]="true">
+
   <!-- jika kosong -->
   <div class="kosong" *ngIf="items.length === 0">
     <ion-icon name="cart-outline"></ion-icon>
@@ -14,7 +22,7 @@
     <ion-list lines="full">
       <ion-item *ngFor="let item of items">
         <ion-thumbnail slot="start">
-          <img [src]="item.produk.gambar || 'assets/img/no-image.png'" alt="">
+          <img [src]="item.produk.gambar ? item.produk.gambar : 'assets/img/no-image.png'" [alt]="item.produk.nama" />
         </ion-thumbnail>
 
         <ion-label>
