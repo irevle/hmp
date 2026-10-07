@@ -1,4 +1,11 @@
-<app-custom-header title="Produk"></app-custom-header>
+<app-custom-header title="Produk">
+  <!-- Tombol navigasi ke halaman Tambah Produk -->
+  <ion-buttons slot="end">
+    <ion-button routerLink="/tambah-produk">
+      <ion-icon slot="icon-only" name="add-outline"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+</app-custom-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
