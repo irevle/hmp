@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Transaksi } from '../../models/transaksi.model';
 import { Router } from '@angular/router';
+
+import { Transaksi } from '../../models/transaksi.model';
 import { TransaksiService } from '../../services/transaksi.service';
 
 @Component({
@@ -10,28 +11,39 @@ import { TransaksiService } from '../../services/transaksi.service';
   standalone: false,
 })
 export class RiwayatTransaksiPage implements OnInit {
+
   daftarTransaksi: Transaksi[] = [];
+
   constructor(
     private router: Router,
     private transaksiSvc: TransaksiService,
   ) {}
 
-  ngOnInit() {}
-
-  // jalan tiap kali halaman dibuka, biar transaksi baru langsung muncul tanpa reload
-  ionViewWillEnter() {
+  ngOnInit(): void {
     this.load();
   }
 
-  load() {
-    this.daftarTransaksi = [...this.transaksiSvc.getAll()].reverse();
+  ionViewDidEnter(): void {
+    this.load();
+  }
+
+  load(): void {
+    this.daftarTransaksi = [
+      ...this.transaksiSvc.getAll()
+    ].reverse();
   }
 
   jumlahItem(t: Transaksi): number {
-    return t.items.reduce((total, item) => total + item.jumlah, 0);
+    return t.items.reduce(
+      (total, item) => total + item.jumlah,
+      0
+    );
   }
 
-  lihatDetail(t: Transaksi) {
-    this.router.navigate(['/tabs/detail-transaksi', t.id]);
+  lihatDetail(t: Transaksi): void {
+    this.router.navigate([
+      '/tabs/detail-transaksi',
+      t.id
+    ]);
   }
 }

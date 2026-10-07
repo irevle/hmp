@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { KeranjangService } from '../../services/keranjang.service';
 import { TransaksiService } from '../../services/transaksi.service';
-import { Router } from '@angular/router';
 import { KeranjangItem } from '../../models/keranjang-item.model';
-import { ChangeDetectorRef } from '@angular/core';
+
 @Component({
   selector: 'app-keranjang',
   templateUrl: './keranjang.page.html',
@@ -11,6 +12,7 @@ import { ChangeDetectorRef } from '@angular/core';
   standalone: false,
 })
 export class KeranjangPage implements OnInit {
+
   items: KeranjangItem[] = [];
   total: number = 0;
 
@@ -18,43 +20,52 @@ export class KeranjangPage implements OnInit {
     private keranjang: KeranjangService,
     private transaksi: TransaksiService,
     private router: Router,
-    private cdr: ChangeDetectorRef,
   ) {}
-  ngOnInit() {
+
+  ngOnInit(): void {
     this.refresh();
   }
 
-  ionViewWillEnter() {
+  ionViewDidEnter(): void {
     this.refresh();
   }
 
-  refresh() {
+  refresh(): void {
     this.items = this.keranjang.getItems();
     this.total = this.keranjang.getTotal();
-    this.cdr.detectChanges();
   }
 
-  tambahQty(id: number) {
+  tambahQty(id: number): void {
     this.keranjang.ubahJumlah(id, 1);
     this.refresh();
   }
 
-  kurangQty(id: number) {
+  kurangQty(id: number): void {
     this.keranjang.ubahJumlah(id, -1);
     this.refresh();
   }
 
-  hapus(id: number) {
+  hapus(id: number): void {
     this.keranjang.hapus(id);
     this.refresh();
   }
 
-  konfirmasi() {
-    if (this.items.length === 0) return;
+  konfirmasi(): void {
+    if (this.items.length === 0) {
+      return;
+    }
 
-    this.transaksi.simpan(this.items, this.total);
+    this.transaksi.simpan(
+      this.items,
+      this.total
+    );
+
     this.keranjang.kosongkan();
+
     this.refresh();
-    this.router.navigate(['tabs/riwayat-transaksi']);
+
+    this.router.navigate([
+      '/tabs/riwayat-transaksi'
+    ]);
   }
 }
