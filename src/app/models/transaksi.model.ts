@@ -1,8 +1,9 @@
-// ambil KeranjangItem  keranjang-item.model.ts
-import { KeranjangItem } from './keranjang-item.model';
+import { TransaksiItem } from './transaksi-item.model';
+import { Pelanggan } from './pelanggan.model';
 export interface Transaksi {
-      id: number;
-      items: KeranjangItem[];
-      total: number;
-      tanggal: Date;
+  id: number;
+  tanggal: string;
+  total: number;
+  pelanggan: Pelanggan;
+  items: TransaksiItem[];
 }

@@ -1,220 +1,74 @@
 import { Injectable } from '@angular/core';
-import { Transaksi } from '../models/transaksi.model';
+import { Observable } from 'rxjs';
 import { KeranjangItem } from '../models/keranjang-item.model';
-import { Produk } from '../models/produk.model';
-import { ProdukService } from './produk.service';
+import { Transaksi } from '../models/transaksi.model';
+import { TransaksiItem } from '../models/transaksi-item.model';
+import { ApiService } from './api.service';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class TransaksiService {
-  private transaksiList: Transaksi[] = [];
+  constructor(private readonly api: ApiService) {}
 
-
-  constructor(private produkService: ProdukService) {
-    this.loadTransaksi();
+  getAll(): Observable<Transaksi[]> {
+    return this.api.get<Transaksi[]>('/transaksi');
   }
 
-
-  private loadTransaksi(): void {
-    const data = localStorage.getItem('transaksiList');
-
-    if (data) {
-      const transaksiTersimpan = JSON.parse(data);
-
-      this.transaksiList = transaksiTersimpan.map(
-        (transaksi: Transaksi) => ({
-          ...transaksi,
-          tanggal: new Date(transaksi.tanggal),
-        })
-      );
-    } else {
-      this.transaksiList = this.buatDummyTransaksi();
-      this.simpanKeStorage();
-    }
+  getById(id: number): Observable<Transaksi> {
+    return this.api.get<Transaksi>(`/transaksi/${id}`);
   }
 
-
-  private simpanKeStorage(): void {
-    localStorage.setItem(
-      'transaksiList',
-      JSON.stringify(this.transaksiList)
-    );
+  simpan(items: KeranjangItem[], total: number): Observable<Transaksi> {
+    return this.api.post<Transaksi>('/transaksi', {
+      tanggal: new Date().toISOString(),
+      total,
+      pelanggan: { nama: 'Pelanggan' },
+      items: items.map((item) => this.buatItem(item)),
+    });
   }
 
-  buatDummyTransaksi(): Transaksi[] {
+  hitungTotalHariIni(list: Transaksi[]): number {
     const hariIni = new Date();
 
-    const beras = this.produkService.getById(1);
-    const minyak = this.produkService.getById(2);
-    const kopi = this.produkService.getById(4);
-
-    if (!beras || !minyak || !kopi) {
-      return [];
-    }
-
-    const transaksi1: Transaksi = {
-      id: 1,
-      tanggal: hariIni,
-      items: [
-        { produk: beras, jumlah: 2 },
-        { produk: minyak, jumlah: 1 },
-      ],
-      total: 0,
-    };
-
-    transaksi1.total = this.hitungTotal(
-      transaksi1.items
-    );
-
-    const transaksi2: Transaksi = {
-      id: 2,
-      tanggal: hariIni,
-      items: [
-        { produk: kopi, jumlah: 3 }
-      ],
-      total: 0,
-    };
-
-    transaksi2.total = this.hitungTotal(
-      transaksi2.items
-    );
-
-    return [
-      transaksi1,
-      transaksi2
-    ];
-  }
-
-  private hitungTotal(
-    items: KeranjangItem[]
-  ): number {
-    return items.reduce(
-      (total, item) =>
-        total +
-        item.produk.hargaJual *
-        item.jumlah,
-      0,
-    );
-  }
-
-  getAll(): Transaksi[] {
-    return this.transaksiList;
-  }
-
-  getById(id: number): Transaksi | undefined {
-    return this.transaksiList.find(
-      (transaksi) =>
-        transaksi.id === id
-    );
-  }
-
-  simpan(
-    items: KeranjangItem[],
-    total: number
-  ): void {
-    const transaksiBaru: Transaksi = {
-      id: this.transaksiList.length + 1,
-
-      items: items.map((item) => ({
-        produk: item.produk,
-        jumlah: item.jumlah,
-      })),
-
-      total: total,
-
-      tanggal: new Date(),
-    };
-
-    this.transaksiList.push(
-      transaksiBaru
-    );
-
-  
-    this.simpanKeStorage();
-  }
-
-  getTotalHariIni(): number {
-    const hariIni = new Date();
-
-    const transaksiHariIni =
-      this.transaksiList.filter(
-        (transaksi) => {
-
-          const tanggalTransaksi =
-            new Date(transaksi.tanggal);
-
-          return (
-            tanggalTransaksi.getFullYear() ===
-              hariIni.getFullYear() &&
-
-            tanggalTransaksi.getMonth() ===
-              hariIni.getMonth() &&
-
-            tanggalTransaksi.getDate() ===
-              hariIni.getDate()
-          );
-        }
-      );
-
-    return transaksiHariIni.reduce(
-      (total, transaksi) =>
-        total + transaksi.total,
-      0,
-    );
-  }
-
-  getProdukTerlaris(): Produk | null {
-    const jumlahTerjual: {
-      produk: Produk;
-      jumlah: number;
-    }[] = [];
-
-    this.transaksiList.forEach(
-      (transaksi) => {
-
-        transaksi.items.forEach(
-          (item) => {
-
-            const dataProduk =
-              jumlahTerjual.find(
-                (data) =>
-                  data.produk.id ===
-                  item.produk.id,
-              );
-
-            if (dataProduk) {
-              dataProduk.jumlah +=
-                item.jumlah;
-            } else {
-              jumlahTerjual.push({
-                produk: item.produk,
-                jumlah: item.jumlah,
-              });
-            }
-          }
+    return list
+      .filter((transaksi) => {
+        const tanggal = new Date(transaksi.tanggal);
+        return (
+          tanggal.getFullYear() === hariIni.getFullYear() &&
+          tanggal.getMonth() === hariIni.getMonth() &&
+          tanggal.getDate() === hariIni.getDate()
         );
-      }
-    );
+      })
+      .reduce((total, transaksi) => total + transaksi.total, 0);
+  }
 
-    if (jumlahTerjual.length === 0) {
-      return null;
-    }
+  cariTerlaris(list: Transaksi[]): TransaksiItem | null {
+    const akumulasi: Record<number, { item: TransaksiItem; jumlah: number }> =
+      {};
 
-    let terlaris = jumlahTerjual[0];
-
-    jumlahTerjual.forEach(
-      (data) => {
-
-        if (
-          data.jumlah >
-          terlaris.jumlah
-        ) {
-          terlaris = data;
+    list.forEach((transaksi) =>
+      transaksi.items.forEach((item) => {
+        const entry = akumulasi[item.produkId];
+        if (entry) {
+          entry.jumlah += item.jumlah;
+        } else {
+          akumulasi[item.produkId] = { item, jumlah: item.jumlah };
         }
-      }
+      }),
     );
 
-    return terlaris.produk;
+    const semua = Object.values(akumulasi);
+    if (semua.length === 0) return null;
+
+    return semua.reduce((a, b) => (b.jumlah > a.jumlah ? b : a)).item;
+  }
+
+  private buatItem(item: KeranjangItem): TransaksiItem {
+    return {
+      produkId: item.produk.id,
+      nama: item.produk.nama,
+      hargaJual: item.produk.hargaJual,
+      jumlah: item.jumlah,
+      subtotal: item.produk.hargaJual * item.jumlah,
+    };
   }
 }
