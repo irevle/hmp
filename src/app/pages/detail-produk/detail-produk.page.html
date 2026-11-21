@@ -8,11 +8,12 @@
     <ion-title>Detail Produk</ion-title>
 
     <!-- Tombol Edit di kanan atas -->
-    <ion-buttons slot="end" *ngIf="produk">
-      <ion-button [routerLink]="['/edit-produk', produk.id]">
-        <ion-icon slot="icon-only" name="create-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+<ion-buttons slot="end" *ngIf="produk">
+  <ion-button [routerLink]="['/edit-produk', produk.id]"
+    [disabled]="(status$ | async) !== 'siap'">
+    <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+  </ion-button>
+</ion-buttons>
 
   </ion-toolbar>
 </ion-header>
@@ -67,18 +68,28 @@
       </ion-list>
 
       <!-- Tombol yang memicu fungsi -->
-      <ion-button expand="block" class="ion-margin-top" [disabled]="produk.stok === 0" (click)="tambahKeKeranjang()">
+      <ion-button expand="block" class="ion-margin-top" [disabled]="produk.stok === 0 || (status$ | async) !== 'siap'" (click)="tambahKeKeranjang()">
         <ion-icon slot="start" name="cart-outline">
         </ion-icon>
 
         {{ produk.stok === 0 ? 'Stok Habis' : 'Tambah ke Keranjang' }}
       </ion-button>
+      <ion-button expand="block" color="danger" (click)="konfirmasiHapus()"
+  [disabled]="(status$ | async) !== 'siap'">
+  <ion-spinner *ngIf="(status$ | async) === 'menghapus'" name="dots"></ion-spinner>
+  Hapus Produk
+</ion-button>
     </ion-card-content>
   </ion-card>
 
   <!-- Tampilan jika produk tidak ditemukan/ID salah -->
-  <div *ngIf="!produk" class="ion-text-center ion-padding">
-    <p>Produk tidak ditemukan.</p>
-  </div>
+  <ion-spinner *ngIf="(status$ | async) === 'memuat'"
+  aria-label="Memuat detail"></ion-spinner>
+
+<p *ngIf="pesan" role="alert">{{ pesan }}</p>
+
+<ion-button *ngIf="(status$ | async) === 'gagal'" (click)="ionViewDidEnter()">
+  Coba Lagi
+</ion-button>
 
 </ion-content>

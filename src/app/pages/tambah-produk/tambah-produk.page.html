@@ -5,6 +5,7 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+  <p *ngIf="editor.pesan" role="alert">{{ editor.pesan }}</p>
   <form [formGroup]="produkForm" (ngSubmit)="onSubmit()">
     <ion-item>
       <ion-label position="stacked">Nama Produk *</ion-label>
@@ -46,13 +47,39 @@
       Stok tidak boleh kurang dari 0.
     </ion-note>
 
-    <ion-item>
-      <ion-label position="stacked">URL Gambar (Opsional)</ion-label>
-      <ion-input formControlName="gambar" placeholder="https://example.com/image.jpg"></ion-input>
-    </ion-item>
+    <ion-item *ngIf="!produkForm.get('gambar')?.value?.startsWith('data:')">
+  <ion-label position="stacked">URL Gambar (Opsional)</ion-label>
+  <ion-input formControlName="gambar" placeholder="https://example.com/image.jpg"></ion-input>
+</ion-item>
 
-    <ion-button expand="block" type="submit" class="ion-margin-top">
+<p>
+  <img [src]="produkForm.get('gambar')?.value || editor.bawaan"
+       alt="Preview gambar produk" width="160">
+</p>
+
+<ion-button type="button" (click)="editor.pilihFoto(produkForm)"
+  [disabled]="(editor.status$ | async) !== 'siap'">
+  Ambil Foto
+</ion-button>
+
+<ion-button type="button" (click)="editor.pilihFoto(produkForm, true)"
+  [disabled]="(editor.status$ | async) !== 'siap'">
+  Pilih dari Galeri
+</ion-button>
+
+<ion-button type="button" fill="clear" (click)="editor.pakaiDefault(produkForm)"
+  [disabled]="(editor.status$ | async) !== 'siap'">
+  Gunakan Gambar Default
+
+</ion-button>
+
+    <ion-button type="submit" expand="block" class="ion-margin-top"
+      [disabled]="(editor.status$ | async) !== 'siap'">
+      <ion-spinner *ngIf="(editor.status$ | async) === 'menyimpan'" name="dots"></ion-spinner>
       Simpan Produk
-    </ion-button>
+    
+</ion-button>
+
+   
   </form>
 </ion-content>

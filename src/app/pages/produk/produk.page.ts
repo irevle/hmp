@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ProdukService } from '../../services/produk.service'
 import { Produk } from '../../models/produk.model';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-produk',
@@ -8,29 +9,43 @@ import { Produk } from '../../models/produk.model';
   styleUrls: ['./produk.page.scss'],
   standalone: false,
 })
-export class ProdukPage implements OnInit {
+export class ProdukPage {
   daftarProduk: Produk[] = [];
   keyword: string = '';
+  status$ = new BehaviorSubject('memuat');
+private semuaProduk: Produk[] = [];
+private bacaan?: Subscription;
 
   constructor(private produkservice: ProdukService) { }
 
-  ngOnInit() {
-    this.loadProduk();
-  }
+  ionViewDidEnter() {
+  this.loadProduk();
+}
 
-  loadProduk() {
-    this.daftarProduk = this.produkservice.getAll();
-  }
+loadProduk() {
+  this.bacaan?.unsubscribe();
+  this.status$.next('memuat');
 
-  // Menggunakan method cariNama dari ProdukService
-  onSearch(event: any) {
-    this.keyword = event.detail.value;
+  this.bacaan = this.produkservice.getAll().subscribe({
+    next: data => {
+      this.semuaProduk = data;
+      this.filterProduk();
+      this.status$.next('siap');
+    },
+    error: () => this.status$.next('gagal'),
+  });
+}
 
-    if (this.keyword && this.keyword.trim() !== '') {
-      this.daftarProduk = this.produkservice.cariNama(this.keyword);
-    } else {
-      this.loadProduk();
-    }
-  }
+onSearch(event: any) {
+  this.keyword = event.detail.value ?? '';
+  this.filterProduk();
+}
+
+private filterProduk() {
+  const kata = this.keyword.trim().toLowerCase();
+  this.daftarProduk = this.semuaProduk.filter(
+    p => p.nama.toLowerCase().includes(kata)
+  );
+}
 
 }

@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { ProdukService } from '../../services/produk.service';
-import { Produk } from '../../models/produk.model';
+import { FormProdukService } from '../produk/form-produk.service';
 
 @Component({
   selector: 'app-tambah-produk',
   templateUrl: './tambah-produk.page.html',
   styleUrls: ['./tambah-produk.page.scss'],
+  providers: [FormProdukService],
   standalone: false,
 })
 export class TambahProdukPage implements OnInit {
@@ -17,7 +17,7 @@ export class TambahProdukPage implements OnInit {
   constructor(
     private fb: FormBuilder,
     private produkService: ProdukService,
-    private router: Router,
+    public editor: FormProdukService,
   ) {}
 
   ngOnInit() {
@@ -30,29 +30,20 @@ export class TambahProdukPage implements OnInit {
       gambar: [''],
     });
   }
+  ionViewDidEnter() {
+  this.produkForm.enable();
+  this.produkForm.reset({ nama: '', kategori: '', gambar: '' });
+  this.isSubmitted = false;
+  this.editor.pesan = '';
+  this.editor.status$.next('siap');
+}
   onSubmit() {
     this.isSubmitted = true;
+    const data = this.editor.baca(this.produkForm);
+  if (!data) return;
 
-    if (this.produkForm.invalid) {
-      return;
-    }
+  const request = this.produkService.tambah(data);
+  this.editor.simpan(this.produkForm, request, 'Produk ditambahkan.');
 
-    // Auto generate ID baru berdasarkan jumlah produk
-    const totalProduk = this.produkService.getJumlahProduk();
-    const formValues = this.produkForm.value;
-    const produkBaru: Produk = {
-      ...this.produkForm.value,
-      id: totalProduk + 1,
-      gambar:
-        formValues.gambar && formValues.gambar.trim() !== ''
-          ? formValues.gambar
-          : 'assets/img/no-image.png',
-    };
-
-    // Panggil method tambah() yang ada di ProdukService
-    this.produkService.tambah(produkBaru);
-
-    // Navigasi kembali ke halaman produk
-    this.router.navigate(['/tabs/produk']);
   }
 }
