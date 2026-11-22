@@ -3,9 +3,21 @@
 </app-custom-header>
 
 <ion-content>
-  <ng-container *ngIf="transaksi as t; else tidakDitemukan">
+  <!-- Loading -->
+  <div class="ion-text-center ion-padding" *ngIf="isLoading">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Memuat detail transaksi...</p>
+  </div>
 
-    <!-- ringkasan -->
+  <!-- Error -->
+  <div class="ion-text-center ion-padding" *ngIf="isError && !isLoading">
+    <ion-icon name="alert-circle-outline" size="large" color="danger"></ion-icon>
+    <p>Gagal memuat transaksi.</p>
+  </div>
+
+  <!-- Data Transaksi Ditemukan -->
+  <ng-container *ngIf="transaksi as t">
+    <!-- ringkasan info transaksi -->
     <ion-card class="info-card">
       <ion-card-content>
         <div class="info-baris">
@@ -23,31 +35,49 @@
       </ion-card-content>
     </ion-card>
 
+    <!-- Data Pelanggan (Nested JSON) -->
+    <h2 class="judul ion-padding-horizontal">Data Pelanggan</h2>
+    <ion-card>
+      <ion-card-content>
+        <div class="info-baris">
+          <span>Nama</span>
+          <strong>{{ t.pelanggan?.nama }}</strong>
+        </div>
+        <div class="info-baris" *ngIf="t.pelanggan?.telepon">
+          <span>Telepon</span>
+          <strong>{{ t.pelanggan?.telepon }}</strong>
+        </div>
+        <div class="info-baris" *ngIf="t.pelanggan?.alamat">
+          <span>Alamat</span>
+          <strong>{{ t.pelanggan?.alamat }}</strong>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
     <!-- item yang dibeli -->
-    <h2 class="judul">Item Dibeli</h2>
+    <h2 class="judul ion-padding-horizontal">Item Dibeli</h2>
     <ion-list lines="full">
       <ion-item *ngFor="let item of t.items">
         <ion-label>
-          <h2>{{ item.produk.nama }}</h2>
-          <p>{{ item.jumlah }} x Rp{{ item.produk.hargaJual | number }}</p>
+          <h2>{{ item.nama }}</h2>
+          <p>{{ item.jumlah }} x Rp{{ item.hargaJual | number }}</p>
         </ion-label>
         <ion-badge slot="end" color="medium">
-          Rp{{ item.produk.hargaJual * item.jumlah | number }}
+          Rp{{ item.subtotal | number }}
         </ion-badge>
       </ion-item>
     </ion-list>
 
     <!-- total -->
-    <div class="total-baris">
+    <div class="total-baris ion-padding">
       <span>Total Belanja</span>
       <strong>Rp{{ t.total | number }}</strong>
     </div>
-
   </ng-container>
 
-  <!-- kalau id salah / tidak ada -->
-  <ng-template #tidakDitemukan>
+  <!-- Tidak ditemukan -->
+  <ng-container *ngIf="!isLoading && !isError && !transaksi">
     <app-empty-state icon="alert-circle-outline" pesan="Transaksi tidak ditemukan">
     </app-empty-state>
-  </ng-template>
+  </ng-container>
 </ion-content>

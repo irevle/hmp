@@ -5,8 +5,22 @@ import { KeranjangItem } from '../models/keranjang-item.model';
   providedIn: 'root',
 })
 export class KeranjangService {
+  private readonly STORAGE_KEY = 'simobile-keranjang';
+
   // menyimpan seleruh item yang ada dlm kerenjang 
   private items: KeranjangItem[] = [];
+
+  constructor() {
+    this.restore(); // ← restore dari localStorage saat service dibuat
+  }
+
+  private simpan(): void {
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.items));
+  }
+  private restore(): void {
+    const raw = localStorage.getItem(this.STORAGE_KEY);
+    this.items = raw ? JSON.parse(raw) : [];
+  }
 
   getItems(): KeranjangItem[] {
   return this.items;
@@ -22,7 +36,6 @@ export class KeranjangService {
     );
 
     if (item) {
-  
       item.jumlah += jumlah;
     } else {
       this.items.push({
@@ -30,53 +43,51 @@ export class KeranjangService {
         jumlah: jumlah
       });
     }
-}
+    this.simpan();
+  }
 
+  // Menghapus produk dari keranjang berdasarkan ID 
+  hapus(produkId: number): void {
 
-// Menghapus produk dari keranjang berdasarkan ID 
-hapus(produkId: number): void {
-
-  // Menyimpan kembali semua item kecuali produk id yg mau di hapus
-  this.items = this.items.filter(
-    item => item.produk.id !== produkId
-  );
-}
-
-
-
-ubahJumlah(produkId: number,delta:number): void {
-const item = this.items.find(
-      item => item.produk.id === produkId
+    // Menyimpan kembali semua item kecuali produk id yg mau di hapus
+    this.items = this.items.filter(
+      item => item.produk.id !== produkId
     );
+    this.simpan();
+  }
 
-    if (!item) {
-      return;
-    }
-    const jumlahBaru = item.jumlah + delta;
+  ubahJumlah(produkId: number,delta:number): void {
+  const item = this.items.find(
+        item => item.produk.id === produkId
+      );
 
-    if (jumlahBaru <= 0) {
-      this.hapus(produkId);
-      return;
-    }
+      if (!item) {
+        return;
+      }
+      const jumlahBaru = item.jumlah + delta;
 
-    item.jumlah = jumlahBaru;
-  
-}
+      if (jumlahBaru <= 0) {
+        this.hapus(produkId);
+        return;
+      }
 
-// Menghitung total harga seluruh produk di keranjang
-getTotal(): number {
+      item.jumlah = jumlahBaru;
+      this.simpan();
+  }
 
-  // Menjumlahkan harga jual dikali jumlah setiap produk
-  return this.items.reduce(
-    (total, item) =>
-      total + (item.produk.hargaJual * item.jumlah),
-    0
-  );
-}
-// kosongkan seluruh isi keranjang
-kosongkan(): void {
-
-  // Mengganti isi array dengan array kosong
-  this.items = [];
-}
+  // Menghitung total harga seluruh produk di keranjang
+  getTotal(): number {
+    // Menjumlahkan harga jual dikali jumlah setiap produk
+    return this.items.reduce(
+      (total, item) =>
+        total + (item.produk.hargaJual * item.jumlah),
+      0
+    );
+  }
+  // kosongkan seluruh isi keranjang
+  kosongkan(): void {
+    // Mengganti isi array dengan array kosong
+    this.items = [];
+    this.simpan();
+  }
 }

@@ -49,8 +49,9 @@
 
     <!-- tombol -->
     <div class="tombol-area">
-      <ion-button expand="block" size="large" [disabled]="items.length === 0" (click)="konfirmasi()">
-        Konfirmasi Transaksi
+      <ion-button expand="block" size="large" [disabled]="items.length === 0 || isSaving" (click)="konfirmasi()">
+        <ion-spinner *ngIf="isSaving" name="crescent" slot="start"></ion-spinner>
+        {{ isSaving ? 'Memproses...' : 'Konfirmasi Transaksi' }}
       </ion-button>
     </div>
   </ng-container>

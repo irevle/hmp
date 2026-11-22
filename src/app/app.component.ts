@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular/lazy';
+import { SyncService } from './services/sync.service';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,7 @@ import { AlertController } from '@ionic/angular/lazy';
   standalone: false,
 })
 export class AppComponent implements OnInit {
-  constructor(private alertCtrl: AlertController) {}
+  constructor(private alertCtrl: AlertController, private sync: SyncService) {}
 
   ngOnInit() {
     const gelap = localStorage.getItem('simobile-dark') === 'true';

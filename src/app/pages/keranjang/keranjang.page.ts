@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular/lazy';
 
 import { KeranjangService } from '../../services/keranjang.service';
 import { TransaksiService } from '../../services/transaksi.service';
@@ -15,11 +16,13 @@ export class KeranjangPage implements OnInit {
 
   items: KeranjangItem[] = [];
   total: number = 0;
+  isSaving: boolean = false; // ← state loading saat checkout
 
   constructor(
     private keranjang: KeranjangService,
     private transaksi: TransaksiService,
     private router: Router,
+    private toastCtrl: ToastController,
   ) {}
 
   ngOnInit(): void {
@@ -51,21 +54,32 @@ export class KeranjangPage implements OnInit {
   }
 
   konfirmasi(): void {
-    if (this.items.length === 0) {
+    if (this.items.length === 0 || this.isSaving) {
       return;
     }
+    this.isSaving = true;
 
-    this.transaksi.simpan(
-      this.items,
-      this.total
-    );
+    // ← sekarang di-subscribe, POST dikirim ke server
+    this.transaksi.simpan(this.items, this.total).subscribe({
+      next: (tr) => {
+        this.keranjang.kosongkan();
+        this.refresh();
+        this.isSaving = false;
+        // ← redirect ke detail transaksi dengan ID baru dari server
+        this.router.navigate(['/tabs/detail-transaksi', tr.id]);
+      },
+      error: () => {
+        this.isSaving = false;
+        // error sudah dihandle oleh error interceptor (toast otomatis)
+      }
+    });
 
-    this.keranjang.kosongkan();
+    /*this.keranjang.kosongkan();
 
     this.refresh();
 
     this.router.navigate([
       '/tabs/riwayat-transaksi'
-    ]);
+    ]);*/
   }
 }
